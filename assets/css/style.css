@@ -8,6 +8,18 @@
         14 404/页脚 · 15 动效 · 16 响应式
    ========================================================================== */
 
+/* ---------------- 00 fonts ----------------
+   自托管开源字体（均为 SIL OFL 1.1，可按站点实际用字裁剪子集）
+   来源与再生成方式见 assets/fonts/README.md 与 tools/build-fonts.py
+   注意：文件名带内容哈希，改字体后请跑 tools/build-fonts.py 并同步此处路径
+   -------------------------------------------------------------------------- */
+@font-face{font-family:"Site Latin";src:url("../fonts/site-latin-regular.1b812099.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Site Latin";src:url("../fonts/site-latin-bold.49b98736.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Site Sans";src:url("../fonts/site-sans.8aa82a94.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Site Serif";src:url("../fonts/site-serif-regular.1da34ee4.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Site Serif";src:url("../fonts/site-serif-bold.7fb46a87.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Site Kai";src:url("../fonts/site-kai.b2ca8d9f.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+
 /* ---------------- 01 tokens ---------------- */
 :root{
   --paper:#ffffff;
@@ -20,7 +32,9 @@
   --accent:#1a3ec8;
   --accent-ink:#ffffff;
   --shadow:0 30px 90px rgba(0,0,0,.35);
-  --sans:"Segoe UI Variable Text","Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue","PingFang SC","HarmonyOS Sans SC","MiSans","Noto Sans SC","Source Han Sans SC","Microsoft YaHei",Arial,sans-serif;
+  --sans:"Site Latin","Site Sans",-apple-system,BlinkMacSystemFont,"Segoe UI Variable Text","Segoe UI","PingFang SC","HarmonyOS Sans SC","MiSans","Noto Sans SC","Microsoft YaHei",Arial,sans-serif;
+  --serif:"Site Serif","Songti SC","Noto Serif SC","Source Han Serif SC","SimSun",serif;
+  --kai:"Site Kai","Kaiti SC","STKaiti","KaiTi",cursive;
   --mono:"Cascadia Mono","Cascadia Code",ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,"Liberation Mono",monospace;
   --rail:clamp(196px,17vw,252px);
   --pad:clamp(22px,4vw,56px);
@@ -377,3 +391,12 @@ h1 sup{font-size:.2em;vertical-align:super;letter-spacing:0;color:var(--accent);
 .links a span,.field label,.btn,.search__item em,.lb__bar span,.ph__tag,
 .linkcard .n em,.tool__hd span,.path .tag,.search__ft{font-size:9.5px}
 .card__idx,.hero__kicker,.mono,.ft,.rail__nav a b{font-size:10px}
+
+/* ---------------- 18 字体应用（自托管字体落地） ---------------- */
+/* 衬线只上标题与正文小标题：大字号下衬线的笔画细节才立得住，正文保持黑体更耐读 */
+h1,.page-hd h1,.article__hd h1,.sec__hd h2,.prose h2,.contact h2{font-family:var(--serif)}
+/* 手写体只做点缀：首页那句自嘲、正文引文。范围一放大就会失去重点 */
+.lede,.prose blockquote{font-family:var(--kai)}
+/* 衬线在小标题上略收一点字距，否则中文宋体在大字号下容易显得松散 */
+.sec__hd h2,.prose h2{letter-spacing:.01em}
+

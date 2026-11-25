@@ -1,0 +1,10 @@
+# 字体源文件缓存（体积大，不入库；由 tools/build-fonts.py 使用）
+.cache/
+
+# 系统与编辑器杂物
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# 字体子集指纹(本地构建用，不入库)
+assets/fonts/.site-*.fp
