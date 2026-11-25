@@ -48,6 +48,7 @@ npx serve .
 |---|---|
 | 姓名 / 一句话简介 | `index.html` 的 `.hero` 区块 |
 | 联系邮箱 | 每个页面 rail 底部与 `.contact`，以及 `assets/js/main.js` 的 `data-copy` 属性值所在处（搜索 `969379064`） |
+| 社交链接 | `index.html` / `about.html` 的 `.links`，`links.html` 的 `.linkcard`（B 站：`space.bilibili.com/46888718`） |
 | 主色 / 字体 | `assets/css/style.css` 顶部 `:root` 的 `--accent`、`--sans`、`--mono` |
 | 深色配色 | 同文件 `:root[data-theme="dark"]` |
 | 作品图 | 把 `<span class="card__media ph ...">` 换成 `<img src="./assets/img/xxx.jpg" alt="…" loading="lazy">`，外层比例已锁好 |

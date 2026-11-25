@@ -12,7 +12,7 @@
   {"title":"不改代码也能改版式：几个 clamp 的用法","url":"notes/grid.html","tag":"css","summary":"用 clamp() 一次性写好字号、间距与容器宽度，减少断点堆叠。","keywords":"css clamp 响应式 字号 间距 断点 前端"},
   {"title":"夜航：拍夜景的笨办法","url":"notes/night.html","tag":"photo","summary":"慢门、找依靠、别开太亮：夜景参数与流程，以及失败的一晚。","keywords":"摄影 夜景 慢门 曝光 参数 相机"},
   {"title":"2025 年，我换掉了三样东西","url":"notes/2025.html","tag":"life","summary":"一台相机、一套工作流、一种对效率的执念。年终回顾。","keywords":"2025 年终 总结 工作流 相机 效率"},
-  {"title":"关于 — 白琦","url":"about.html","tag":"page","summary":"在丽水做视觉的人：简介、时间线、技能标签与现在在忙的事。","keywords":"关于 简介 简历 时间线 技能 丽水"},
-  {"title":"友链 — 常去的地方","url":"links.html","tag":"page","summary":"设计、摄影、独立开发与论坛，几个常去的站。","keywords":"友链 链接 博客 设计 摄影 论坛"},
+  {"title":"关于 — 白琦","url":"about.html","tag":"page","summary":"在丽水做视觉的人：简介、时间线、技能标签与现在在忙的事。","keywords":"关于 简介 简历 时间线 技能 丽水 b站 bilibili"},
+  {"title":"友链 — 常去的地方","url":"links.html","tag":"page","summary":"设计、摄影、独立开发与论坛，几个常去的站，含我的 B 站主页。","keywords":"友链 链接 博客 设计 摄影 论坛 b站 bilibili 46888718"},
   {"title":"工具箱 — 本地小工具","url":"lab.html","tag":"page","summary":"时间戳转换、文本统计、JSON 格式化；全部在浏览器本地运行。","keywords":"工具 时间戳 json 格式化 字数统计 lab"}
 ]}
