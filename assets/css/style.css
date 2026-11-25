@@ -15,10 +15,10 @@
    -------------------------------------------------------------------------- */
 @font-face{font-family:"Site Latin";src:url("../fonts/site-latin-regular.1b812099.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:"Site Latin";src:url("../fonts/site-latin-bold.49b98736.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"Site Sans";src:url("../fonts/site-sans.8aa82a94.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
-@font-face{font-family:"Site Serif";src:url("../fonts/site-serif-regular.1da34ee4.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"Site Serif";src:url("../fonts/site-serif-bold.7fb46a87.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
-@font-face{font-family:"Site Kai";src:url("../fonts/site-kai.b2ca8d9f.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Site Sans";src:url("../fonts/site-sans.58d7384b.woff2") format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Site Serif";src:url("../fonts/site-serif-regular.7c298351.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Site Serif";src:url("../fonts/site-serif-bold.fdf49ac2.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Site Kai";src:url("../fonts/site-kai.1b779c99.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
 
 /* ---------------- 01 tokens ---------------- */
 :root{
@@ -381,16 +381,46 @@ h1 sup{font-size:.2em;vertical-align:super;letter-spacing:0;color:var(--accent);
   .article__ft{font-size:8.5px}
 }
 
-/* ---------------- 17 微标注可读性 ---------------- */
-/* 8.5–9.5px 的等宽小字原来偏细：统一加半档字重、提一档字号，颜色也提一档对比度 */
+/* ---------------- 17 微标注可读性 ----------------
+   这一层全是等宽大写小字（编号、英文小标、按钮、筛选器、图注）。
+   两个原则：
+   1) 字号提到 11–12.5px，别再出现 8.5/9px 这种"要凑近看"的尺寸；
+   2) 字重统一 700 —— 系统等宽字体（Consolas/Cascadia）只有 400 与 700 两个真字重，
+      写 600 会触发浏览器"假加粗"，笔画被算法补齐，屏幕上看就是糊的。
+   配套把字距与行高也放开一点，避免 12px 后挤成一团。
+   ------------------------------------------------------------------------- */
 .rail__brand span,.rail__dot,.hero__kicker,.hero__img figcaption,.mono,.page-hd .mono,
 .sec__hd .en,.facts dt,.about__block .k,.tags li,.card__m,.card__idx,.ph__tag,
 .path .yr,.path .tag,.links a span,.linkcard .n em,.tool__hd span,.field label,
-.btn,.theme,.search__ft,.search__item em,.lb__bar span,.ft,.rail__nav a b{font-weight:600}
-.rail__brand span,.rail__dot,.sec__hd .en,.facts dt,.about__block .k,.tags li,.card__m,
-.links a span,.field label,.btn,.search__item em,.lb__bar span,.ph__tag,
-.linkcard .n em,.tool__hd span,.path .tag,.search__ft{font-size:9.5px}
-.card__idx,.hero__kicker,.mono,.ft,.rail__nav a b{font-size:10px}
+.btn,.theme,.search__ft,.search__item em,.lb__bar span,.ft,.rail__nav a b,
+.entry .n,.entry .go,.chip,.copy,.article__hd .meta,.toc b,.article__ft,.search__hd kbd,
+.search__none,.toast{font-weight:700}
+
+/* 12.5px —— 页码/序号这类最需要被识别的 */
+.entry .n,.card__idx{font-size:12.5px}
+
+/* 12px —— 整块小标、页脚、导航序号 */
+.mono,.hero__kicker,.ft,.rail__nav a b,.sec__hd .en,.about__block .k,.toast{font-size:12px}
+
+/* 11.5px —— 按钮、筛选、图注、元信息 */
+.rail__dot,.hero__img figcaption,.facts dt,.tags li,.card__m,.sec__hd .more,.entry .go,
+.btn,.copy,.theme,.chip,.toc b,.article__ft,.article__hd .meta,.links a span,.field label,
+.lb__bar span,.search__none{font-size:11.5px}
+
+/* 11px —— 叠在图片/边框上的极小字，仍然保底可读 */
+.rail__brand span,.ph__tag,.note__tag,.linkcard .n em,.tool__hd span,.path .yr,.path .tag,
+.search__item em,.search__ft,.search__hd kbd{font-size:11px}
+
+/* 字距放开：原来 .1–.14em 是给 9px 调的，12px 下会挤 */
+.rail__brand span,.hero__kicker,.hero__img figcaption,.ft,.article__hd .meta,
+.sec__hd .en,.about__block .k{letter-spacing:.16em}
+.entry .n,.entry .go,.card__m,.chip,.btn,.copy,.theme,.tags li,.field label{letter-spacing:.14em}
+
+/* 行高：会折行的长英文串需要更松的基线 */
+.hero__kicker,.ft,.article__hd .meta,.mono,.sec__hd .en{line-height:1.75}
+
+/* 左栏状态那句在 200px 宽的栏里会折行，单独收到 11px 并压一点字距，保持一行 */
+.rail__dot{font-size:11px;letter-spacing:.1em}
 
 /* ---------------- 18 字体应用（自托管字体落地） ---------------- */
 /* 衬线只上标题与正文小标题：大字号下衬线的笔画细节才立得住，正文保持黑体更耐读 */

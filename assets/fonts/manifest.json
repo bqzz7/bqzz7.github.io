@@ -1,13 +1,13 @@
 {
-  "chars": 978,
-  "charset_fingerprint": "ca0f98ca",
+  "chars": 994,
+  "charset_fingerprint": "97cd6fcd",
   "files": {
-    "sans": "site-sans.8aa82a94.woff2",
-    "serif-regular": "site-serif-regular.1da34ee4.woff2",
-    "serif-bold": "site-serif-bold.7fb46a87.woff2",
-    "kai": "site-kai.b2ca8d9f.woff2",
+    "sans": "site-sans.58d7384b.woff2",
+    "serif-regular": "site-serif-regular.7c298351.woff2",
+    "serif-bold": "site-serif-bold.fdf49ac2.woff2",
+    "kai": "site-kai.1b779c99.woff2",
     "latin-regular": "site-latin-regular.1b812099.woff2",
     "latin-bold": "site-latin-bold.49b98736.woff2"
   },
-  "total_bytes": 1550636
+  "total_bytes": 1576284
 }
