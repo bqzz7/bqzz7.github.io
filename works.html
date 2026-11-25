@@ -20,7 +20,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="./assets/img/icon-192.png">
 <link rel="apple-touch-icon" href="./assets/img/apple-touch-icon.png">
 <link rel="preload" href="./assets/fonts/site-sans.58d7384b.woff2" as="font" type="font/woff2">
-<link rel="stylesheet" href="./assets/css/style.css">
+<link rel="stylesheet" href="./assets/css/style.css?v=2">
 <script>
 (function(){try{var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 document.documentElement.classList.add('js');
@@ -54,7 +54,7 @@ document.documentElement.classList.add('js');
 <div class="shell">
   <main id="main">
     <header class="page-hd">
-      <span class="mono">02 — The Good Stuff / 08</span>
+      <span class="mono">02 — The Good Stuff / 09</span>
       <h1>一些不错的作品</h1>
       <p>待上传，我只能说</p>
     </header>
@@ -62,16 +62,16 @@ document.documentElement.classList.add('js');
     <section class="sec sec--last" aria-labelledby="works-h">
       <header class="sec__hd">
         <h2 id="works-h"><i>01</i>全部作品</h2>
-        <span class="en">All / 08</span>
+        <span class="en">All / 09</span>
       </header>
 
       <div class="filter" data-filter-group aria-label="按类别筛选">
-        <button class="chip is-on" type="button" data-cat="all" aria-pressed="true">全部<span class="c">08</span></button>
+        <button class="chip is-on" type="button" data-cat="all" aria-pressed="true">全部<span class="c">09</span></button>
         <button class="chip" type="button" data-cat="brand" aria-pressed="false">永劫无间<span class="c">02</span></button>
         <button class="chip" type="button" data-cat="photo" aria-pressed="false">守望先锋<span class="c">03</span></button>
         <button class="chip" type="button" data-cat="edit" aria-pressed="false">其他作品<span class="c">01</span></button>
         <button class="chip" type="button" data-cat="show" aria-pressed="false">摄影<span class="c">01</span></button>
-        <button class="chip" type="button" data-cat="dev" aria-pressed="false">AI绘制<span class="c">01</span></button>
+        <button class="chip" type="button" data-cat="dev" aria-pressed="false">AI绘制<span class="c">02</span></button>
       </div>
 
       <div class="works">
@@ -113,6 +113,11 @@ document.documentElement.classList.add('js');
         <button class="card reveal" type="button" data-cat="photo" data-lb data-title="没有这个东西" data-meta="日常摄影 · 2026">
           <span class="card__media ph ph--1" aria-hidden="true"><span class="ph__num">08</span><span class="ph__tag">雨停</span></span>
           <span class="card__cap"><span class="card__idx">08</span><span class="card__t">没有这个东西</span><span class="card__m">日常摄影 · 2026</span></span>
+        </button>
+
+        <button class="card reveal" type="button" data-cat="dev" data-lb data-title="白玖（头部）" data-meta="AI绘制 · 2026">
+          <span class="card__media ph ph--6 card__art" aria-hidden="true"><img src="./assets/img/baijiu-ai.jpg" alt="白玖（头部），AI 绘制头像" width="1200" height="1600" loading="lazy" decoding="async"><span class="ph__num">09</span><span class="ph__tag">白玖</span></span>
+          <span class="card__cap"><span class="card__idx">09</span><span class="card__t">白玖（头部）</span><span class="card__m">AI绘制 · 2026</span></span>
         </button>
       </div>
 
@@ -156,6 +161,6 @@ document.documentElement.classList.add('js');
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="./assets/js/main.js" defer></script>
+<script src="./assets/js/main.js?v=4" defer></script>
 </body>
 </html>

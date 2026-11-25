@@ -21,7 +21,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="./assets/img/icon-192.png">
 <link rel="apple-touch-icon" href="./assets/img/apple-touch-icon.png">
 <link rel="preload" href="./assets/fonts/site-sans.58d7384b.woff2" as="font" type="font/woff2">
-<link rel="stylesheet" href="./assets/css/style.css">
+<link rel="stylesheet" href="./assets/css/style.css?v=2">
 <script>
 /* 尽早定主题，避免闪烁 */
 (function(){try{var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
@@ -78,12 +78,12 @@ document.documentElement.classList.add('js');
         </dl>
       </div>
       <figure class="hero__img">
-        <!-- 图片：换成 <img src="./assets/img/hero.jpg" alt="…" loading="lazy"> 即可，21:8 裁切已锁好 -->
-        <div class="ph ph--2" role="img" aria-label="主视觉占位图">
+        <div class="ph ph--2 hero__media">
+          <img src="./assets/img/yueshan.jpg" alt="永劫无间 · 岳山：月夜浮空石台上的背影" width="1920" height="1080" fetchpriority="high" decoding="async">
           <span class="ph__num">FIG. 01</span>
-          <span class="ph__tag">主视觉 — 待替换图片</span>
+          <button class="hero__egg" type="button" data-egg="./subdirectory/a.html" aria-label="点开这张图"></button>
         </div>
-        <figcaption><span>Fig. 01 — Wide crop, 21:8</span><span>2026</span></figcaption>
+        <figcaption><span>Fig. 01 — 永劫无间 · 岳山</span><span>2026</span></figcaption>
       </figure>
     </section>
 
@@ -137,9 +137,9 @@ document.documentElement.classList.add('js');
             <span class="note__d">2026.11.01</span>
             <span>
               <span class="note__t">尝试使用相机EOS R，尝试接触Agent来完成工作，有点难</span>
-              <span class="note__x">用 clamp() 锁定字号与间距，一次写好三档屏幕，不用再堆一堆断点。</span>
+              <span class="note__x">相机刚到，Agent 也是头一次上手：能出活，但都不算顺手。</span>
             </span>
-            <span class="note__tag">css</span>
+            <span class="note__tag">photo</span>
           </a>
         </li>
         <li class="reveal">
@@ -147,7 +147,7 @@ document.documentElement.classList.add('js');
             <span class="note__d">2026.10.29</span>
             <span>
               <span class="note__t">新的环境，我还是不善言辞</span>
-              <span class="note__x">慢门、靠墙、别开太亮。几张自己还算满意的夜色，和当时的参数。</span>
+              <span class="note__x">换了地方住，话还是不太会说。夜里先拍了几张凑数。</span>
             </span>
             <span class="note__tag">photo</span>
           </a>
@@ -201,6 +201,22 @@ document.documentElement.classList.add('js');
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="./assets/js/main.js" defer></script>
+<!-- 彩蛋口令 -->
+<div class="egg" id="egg" hidden>
+  <div class="egg__box" role="dialog" aria-modal="true" aria-labelledby="eggGlitch">
+    <button class="egg__x" type="button" data-egg-close aria-label="关闭">✕</button>
+    <p class="egg__glitch" id="eggGlitch" data-text="2077" aria-label="2077">2077</p>
+    <form class="egg__form" id="eggForm" novalidate>
+      <label class="egg__label" for="eggInput">输入口令</label>
+      <div class="egg__row">
+        <input class="egg__input" id="eggInput" type="text" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="8" placeholder="····" aria-describedby="eggHint">
+        <button class="egg__go" type="submit">进入</button>
+      </div>
+      <p class="egg__hint" id="eggHint"></p>
+    </form>
+  </div>
+</div>
+
+<script src="./assets/js/main.js?v=4" defer></script>
 </body>
 </html>

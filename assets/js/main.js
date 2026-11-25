@@ -119,6 +119,17 @@
     var media = $('.card__media', c);
     stage.innerHTML = '';
     if (media) stage.appendChild(media.cloneNode(true));
+    // 有真实图片时，舞台按图片自身比例走（占位块仍用 CSS 的 16/10）
+    var stageImg = stage.querySelector('img');
+    if (stageImg) {
+      var ratio = (stageImg.naturalWidth && stageImg.naturalHeight)
+        ? stageImg.naturalWidth / stageImg.naturalHeight
+        : (Number(stageImg.getAttribute('width')) || 1) / (Number(stageImg.getAttribute('height')) || 1);
+      if (!ratio || !isFinite(ratio)) ratio = 1.6;
+      stage.style.aspectRatio = String(Math.min(2.2, Math.max(0.6, ratio)));
+    } else {
+      stage.style.aspectRatio = '';
+    }
     if (cap) cap.textContent = c.getAttribute('data-title') || '';
     if (meta) meta.textContent = c.getAttribute('data-meta') || '';
     if (count) count.textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(cards.length).padStart(2, '0');
@@ -361,7 +372,60 @@
     $('#jsonMin') && $('#jsonMin').addEventListener('click', function () { runJson(true); });
   }
 
-  /* 11 外部链接：自动补 rel ---------------------------------------------- */
+  /* 12 彩蛋口令（首页大图入口） ------------------------------------------ */
+  var eggTrigger = $('[data-egg]');
+  var eggDlg = $('#egg');
+  if (eggTrigger && eggDlg) {
+    var eggForm = $('#eggForm'), eggInput = $('#eggInput'), eggHint = $('#eggHint');
+    var eggDest = eggTrigger.getAttribute('data-egg');
+    var eggTries = 0;
+
+    var openEgg = function () {
+      eggDlg.hidden = false;
+      void eggDlg.offsetWidth;
+      eggDlg.classList.add('is-open');
+      document.body.classList.add('is-locked');
+      eggHint.textContent = '';
+      eggDlg.classList.remove('is-wrong');
+      eggInput.value = '';
+      setTimeout(function () { eggInput.focus(); }, 80);
+    };
+    var closeEgg = function () {
+      eggDlg.classList.remove('is-open');
+      document.body.classList.remove('is-locked');
+      setTimeout(function () { eggDlg.hidden = true; }, 220);
+    };
+
+    eggTrigger.addEventListener('click', openEgg);
+    $$('[data-egg-close]').forEach(function (b) { b.addEventListener('click', closeEgg); });
+    eggDlg.addEventListener('click', function (e) { if (e.target === eggDlg) closeEgg(); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !eggDlg.hidden) closeEgg();
+    });
+
+    eggForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var v = (eggInput.value || '').trim().replace(/\s/g, '').toUpperCase();
+      if (v === '2077') {
+        location.href = eggDest;
+        return;
+      }
+      eggTries += 1;
+      eggHint.textContent = eggTries >= 2 ? '不对。提示：四个数字。' : '口令不对。';
+      eggInput.value = '';
+      eggDlg.classList.remove('is-wrong');
+      void eggDlg.offsetWidth;
+      eggDlg.classList.add('is-wrong');
+      eggInput.focus();
+    });
+
+    eggInput.addEventListener('input', function () {
+      if (eggHint.textContent) eggHint.textContent = '';
+      eggDlg.classList.remove('is-wrong');
+    });
+  }
+
+  /* 13 外部链接：自动补 rel ---------------------------------------------- */
   $$('a[href^="http"]').forEach(function (a) {
     if (a.hostname && a.hostname !== location.hostname) {
       a.setAttribute('rel', 'noopener noreferrer');

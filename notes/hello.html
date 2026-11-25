@@ -20,7 +20,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="../assets/img/icon-192.png">
 <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
 <link rel="preload" href="../assets/fonts/site-sans.58d7384b.woff2" as="font" type="font/woff2">
-<link rel="stylesheet" href="../assets/css/style.css">
+<link rel="stylesheet" href="../assets/css/style.css?v=2">
 <script>
 (function(){try{var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 document.documentElement.classList.add('js');
@@ -79,8 +79,8 @@ document.documentElement.classList.add('js');
 ├── about.html
 ├── links.html
 ├── lab.html          工具箱
-├── assets/css/style.css
-├── assets/js/main.js
+├── assets/css/style.css?v=2
+├── assets/js/main.js?v=4
 ├── data/search.json  站内搜索索引
 └── legacy/index-v1.html  旧版单页备份</code></pre>
         <p>关键是那条 <code>body data-root="../"</code>：子目录页面把根路径写进属性，脚本据此拼出 CSS、索引和跳转地址。只有一处需要改，而且不依赖任何运行环境。</p>
@@ -129,6 +129,6 @@ document.documentElement.classList.add('js');
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="../assets/js/main.js" defer></script>
+<script src="../assets/js/main.js?v=4" defer></script>
 </body>
 </html>

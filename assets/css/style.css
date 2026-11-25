@@ -109,7 +109,7 @@ h1 sup{font-size:.2em;vertical-align:super;letter-spacing:0;color:var(--accent);
 .facts dt{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
 .facts dd{margin:0;color:var(--ink-2)}
 .hero__img{margin-top:clamp(34px,5vw,56px)}
-.hero__img .ph{aspect-ratio:21/8}
+.hero__img .ph{aspect-ratio:16/9}
 .hero__img figcaption{display:flex;justify-content:space-between;gap:16px;margin-top:9px;font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 
 /* 页面标题（内页用） */
@@ -164,7 +164,8 @@ h1 sup{font-size:.2em;vertical-align:super;letter-spacing:0;color:var(--accent);
 .card__m{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 
 .ph{position:relative;isolation:isolate;overflow:hidden;background:#e8e8e8}
-.ph::after{content:"";position:absolute;inset:0;background-image:var(--noise);opacity:.45;mix-blend-mode:multiply;pointer-events:none}
+/* 噪点肌理只给纯占位块；卡片需要 ::after 留给悬停时的蓝色蒙版，否则两者会打架 */
+.ph:not(.card__media)::after{content:"";position:absolute;inset:0;background-image:var(--noise);opacity:.45;mix-blend-mode:multiply;pointer-events:none}
 .ph__tag{position:absolute;left:12px;bottom:10px;z-index:2;font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ph-ink,#fff);opacity:.8}
 .ph__num{position:absolute;right:10px;top:4px;z-index:2;font-family:var(--mono);font-size:clamp(18px,3vw,30px);font-weight:400;line-height:1;color:var(--ph-ink,#fff);opacity:.4;letter-spacing:-.04em}
 .ph--1{--ph-ink:#e8edff;background:
@@ -190,6 +191,14 @@ h1 sup{font-size:.2em;vertical-align:super;letter-spacing:0;color:var(--accent);
   radial-gradient(60% 50% at 72% 24%,rgba(255,255,255,.95),transparent 66%),
   radial-gradient(60% 50% at 14% 88%,rgba(150,170,200,.55),transparent 68%),
   linear-gradient(150deg,#e4ebf4,#c2cfe0)}
+
+/* 真实图片：占位块里塞 <img> 填充，占位渐变自然被盖住 */
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
+.hero__media img{object-position:center}
+.card__art{--ph-ink:#171717}
+.card__art img{object-position:center 16%}
+/* 有真实图片时去掉噪点肌理，别把照片糊上一层 */
+.hero__media::after,.card__art::after{background-image:none}
 
 /* ---------------- 07 笔记列表 ---------------- */
 .notes{display:grid;gap:0;border-top:1px solid var(--line)}
@@ -302,6 +311,7 @@ h1 sup{font-size:.2em;vertical-align:super;letter-spacing:0;color:var(--accent);
 .lb::backdrop{background:rgba(10,10,10,.86);backdrop-filter:blur(4px)}
 .lb__stage{position:relative;width:100%;aspect-ratio:16/10;max-height:calc(92vh - 62px);overflow:hidden;background:#111}
 .lb__stage>*{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;aspect-ratio:auto!important;outline:0!important}
+.lb__stage img{object-fit:contain!important}
 .lb__x,.lb__nav{position:absolute;z-index:3;display:grid;place-items:center;border:1px solid rgba(255,255,255,.6);background:rgba(10,10,10,.5);color:#fff;transition:background .2s}
 .lb__x:hover,.lb__nav:hover{background:#1a3ec8;border-color:#1a3ec8}
 .lb__x{top:12px;right:12px;width:36px;height:36px;font-size:13px}
@@ -429,4 +439,81 @@ h1,.page-hd h1,.article__hd h1,.sec__hd h2,.prose h2,.contact h2{font-family:var
 .lede,.prose blockquote{font-family:var(--kai)}
 /* 衬线在小标题上略收一点字距，否则中文宋体在大字号下容易显得松散 */
 .sec__hd h2,.prose h2{letter-spacing:.01em}
+
+/* ---------------- 19 彩蛋：首页大图入口 + 2077 口令弹窗 ---------------- */
+/* 大图整块当按钮用：透明的 button 盖住画面，键盘也能触发 */
+.hero__egg{position:absolute;inset:0;z-index:3;width:100%;height:100%;border:0;padding:0;background:transparent;cursor:zoom-in;color:transparent;font-size:0}
+.hero__egg::after{
+  content:"ENTER ⤴";position:absolute;right:10px;bottom:8px;z-index:1;
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.16em;
+  color:#fff;opacity:0;transition:opacity .25s ease;
+}
+.hero__egg:hover::after,.hero__egg:focus-visible::after{opacity:.72}
+.hero__egg:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+.egg{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;
+  background:rgba(10,10,10,.88);backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;transition:opacity .22s ease}
+.egg.is-open{opacity:1;pointer-events:auto}
+.egg[hidden]{display:none}
+.egg__box{
+  position:relative;width:min(420px,92vw);padding:clamp(26px,4.6vw,42px) clamp(22px,4vw,38px) clamp(24px,4vw,34px);
+  border:1px solid var(--line-strong);background:var(--paper);color:var(--ink);box-shadow:var(--shadow);
+}
+.egg__x{position:absolute;top:10px;right:10px;width:32px;height:32px;display:grid;place-items:center;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;font-size:13px;transition:color .2s,border-color .2s}
+.egg__x:hover{color:var(--ink);border-color:var(--line-strong)}
+
+/* 故障字：一层底色 + 两层错位副本，靠 clip-path 切片做出撕裂感 */
+.egg__glitch{
+  position:relative;display:block;margin:0 0 clamp(22px,4vw,32px);text-align:center;
+  font-family:var(--mono);font-weight:700;font-size:clamp(54px,13vw,78px);line-height:.9;
+  letter-spacing:.1em;color:var(--ink);text-transform:uppercase;
+}
+.egg__glitch::before,.egg__glitch::after{content:attr(data-text);position:absolute;inset:0;pointer-events:none}
+.egg__glitch::before{color:var(--accent);transform:translate(-2px,-1px);clip-path:inset(14% 0 56% 0);animation:eggGlitchA 3.2s steps(2,end) infinite}
+.egg__glitch::after{color:#ff2f8e;transform:translate(2px,1px);clip-path:inset(60% 0 10% 0);animation:eggGlitchB 2.6s steps(2,end) infinite}
+.egg__glitch{animation:eggFlicker 4.4s steps(1,end) infinite}
+@keyframes eggGlitchA{
+  0%,86%,100%{clip-path:inset(14% 0 56% 0);transform:translate(-2px,-1px)}
+  87%{clip-path:inset(4% 0 78% 0);transform:translate(-4px,1px)}
+  90%{clip-path:inset(42% 0 34% 0);transform:translate(3px,-2px)}
+  93%{clip-path:inset(68% 0 6% 0);transform:translate(-3px,0)}
+}
+@keyframes eggGlitchB{
+  0%,84%,100%{clip-path:inset(60% 0 10% 0);transform:translate(2px,1px)}
+  85%{clip-path:inset(28% 0 52% 0);transform:translate(4px,-1px)}
+  89%{clip-path:inset(78% 0 2% 0);transform:translate(-3px,2px)}
+  92%{clip-path:inset(8% 0 74% 0);transform:translate(2px,0)}
+}
+@keyframes eggFlicker{
+  0%,72%,76%,100%{opacity:1}
+  73%,75%{opacity:.55}
+}
+@media (prefers-reduced-motion: reduce){
+  .egg__glitch,.egg__glitch::before,.egg__glitch::after{animation:none}
+}
+
+.egg__label{display:block;margin-bottom:10px;font-family:var(--mono);font-weight:700;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.egg__row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px}
+.egg__input{
+  width:100%;padding:12px 14px;border:1px solid var(--line-strong);background:transparent;color:var(--ink);
+  font-family:var(--mono);font-weight:700;font-size:18px;letter-spacing:.28em;text-align:center;
+  outline:none;transition:border-color .2s,box-shadow .2s;
+}
+.egg__input::placeholder{color:var(--muted);letter-spacing:.28em;font-weight:400}
+.egg__input:focus{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.egg__go{
+  padding:0 20px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;
+  font-family:var(--mono);font-weight:700;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;
+  transition:background .2s,color .2s;
+}
+.egg__go:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.egg__hint{min-height:1.2em;margin-top:12px;font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;color:#ff2f8e}
+.egg.is-wrong .egg__row{animation:eggShake .32s ease}
+@keyframes eggShake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-5px)}
+  50%{transform:translateX(5px)}
+  75%{transform:translateX(-3px)}
+}
 
