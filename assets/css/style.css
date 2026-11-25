@@ -14,14 +14,14 @@
   --paper-2:#f7f7f5;
   --ink:#0a0a0a;
   --ink-2:#333333;
-  --muted:#767676;
+  --muted:#6b6b6b;
   --line:#e4e4e4;
   --line-strong:#111111;
   --accent:#1a3ec8;
   --accent-ink:#ffffff;
   --shadow:0 30px 90px rgba(0,0,0,.35);
-  --sans:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Helvetica,"PingFang SC","HarmonyOS Sans SC","MiSans","Microsoft YaHei","Source Han Sans SC","Noto Sans SC",Arial,sans-serif;
-  --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,"Liberation Mono",monospace;
+  --sans:"Segoe UI Variable Text","Segoe UI",-apple-system,BlinkMacSystemFont,"Helvetica Neue","PingFang SC","HarmonyOS Sans SC","MiSans","Noto Sans SC","Source Han Sans SC","Microsoft YaHei",Arial,sans-serif;
+  --mono:"Cascadia Mono","Cascadia Code",ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,"Liberation Mono",monospace;
   --rail:clamp(196px,17vw,252px);
   --pad:clamp(22px,4vw,56px);
   --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.1'/%3E%3C/svg%3E");
@@ -32,7 +32,7 @@
   --paper-2:#141416;
   --ink:#f3f3f0;
   --ink-2:#c8c8c2;
-  --muted:#8a8a85;
+  --muted:#9b9b96;
   --line:#2b2b2e;
   --line-strong:#f3f3f0;
   --accent:#7d94ff;
@@ -310,8 +310,7 @@ h1 sup{font-size:.2em;vertical-align:super;letter-spacing:0;color:var(--accent);
 .ft a{border-bottom:1px solid var(--line);padding-bottom:1px}
 .ft a:hover{color:var(--accent);border-color:var(--accent)}
 
-/* ---------------- 15 动效 ---------------- */
-.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+/* ---------------- 15 动效 ---------------- */.js .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
 .js .reveal.is-in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -367,3 +366,14 @@ h1 sup{font-size:.2em;vertical-align:super;letter-spacing:0;color:var(--accent);
   .lb__nav--next{right:6px}
   .article__ft{font-size:8.5px}
 }
+
+/* ---------------- 17 微标注可读性 ---------------- */
+/* 8.5–9.5px 的等宽小字原来偏细：统一加半档字重、提一档字号，颜色也提一档对比度 */
+.rail__brand span,.rail__dot,.hero__kicker,.hero__img figcaption,.mono,.page-hd .mono,
+.sec__hd .en,.facts dt,.about__block .k,.tags li,.card__m,.card__idx,.ph__tag,
+.path .yr,.path .tag,.links a span,.linkcard .n em,.tool__hd span,.field label,
+.btn,.theme,.search__ft,.search__item em,.lb__bar span,.ft,.rail__nav a b{font-weight:600}
+.rail__brand span,.rail__dot,.sec__hd .en,.facts dt,.about__block .k,.tags li,.card__m,
+.links a span,.field label,.btn,.search__item em,.lb__bar span,.ph__tag,
+.linkcard .n em,.tool__hd span,.path .tag,.search__ft{font-size:9.5px}
+.card__idx,.hero__kicker,.mono,.ft,.rail__nav a b{font-size:10px}
