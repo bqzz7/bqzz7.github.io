@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>不改代码也能改版式：几个 clamp 的用法 — 白琦</title>
+<meta name="description" content="用 clamp() 一次性写好字号、间距与容器宽度，减少断点堆叠；附几个我在这个站里实际在用的写法。">
+<meta name="author" content="白琦">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://bqzz7.github.io/notes/grid.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="白琦 · 个人门户">
+<meta property="og:title" content="不改代码也能改版式：几个 clamp 的用法">
+<meta property="og:description" content="用 clamp() 减少断点堆叠的几种写法。">
+<meta property="og:url" content="https://bqzz7.github.io/notes/grid.html">
+<meta property="og:locale" content="zh_CN">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>
+(function(){try{var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+document.documentElement.classList.add('js');
+</script>
+</head>
+<body data-root="../">
+<a class="skip" href="#main">跳到正文</a>
+<div class="progress" id="progress"></div>
+
+<aside class="rail">
+  <a class="rail__brand" href="../index.html">白琦<span>Bai Qi / bqzz7</span></a>
+  <nav class="rail__nav" aria-label="主导航">
+    <a href="../index.html"><b>01</b>首页</a>
+    <a href="../works.html"><b>02</b>作品</a>
+    <a href="../notes.html" class="is-active" aria-current="page"><b>03</b>笔记</a>
+    <a href="../about.html"><b>04</b>关于</a>
+    <a href="../links.html"><b>05</b>友链</a>
+    <a href="../lab.html"><b>06</b>工具箱</a>
+  </nav>
+  <div class="rail__foot">
+    <a href="mailto:969379064@qq.com">969379064@qq.com</a>
+    <span class="rail__dot"><i></i>Available for work</span>
+    <div class="rail__row">
+      <button class="theme" id="themeToggle" type="button" aria-pressed="false" aria-label="切换深浅色">
+        <span class="theme__label">Dark</span>
+      </button>
+      <button class="theme" type="button" data-search-open aria-label="搜索（Ctrl+K）">Ctrl K</button>
+    </div>
+  </div>
+</aside>
+
+<div class="shell">
+  <main id="main">
+    <article class="article">
+      <header class="article__hd">
+        <div class="meta"><span>2026.11.24</span><span>笔记 / 前端</span><span>约 5 分钟</span></div>
+        <h1>不改代码也能改版式：几个 clamp 的用法</h1>
+      </header>
+
+      <nav class="toc" aria-label="本文目录"><b>目录</b><div id="toc"></div></nav>
+
+      <div class="prose">
+        <p>写响应式最容易犯的错，是把每个尺寸都写成一条媒体查询：平板一档、手机一档、小手机再一档。改一次间距就要翻三处。这个站一档都没写，靠的都是 <code>clamp()</code>。</p>
+
+        <h2>它到底在算什么</h2>
+        <p><code>clamp(最小值, 理想值, 最大值)</code>。中间的"理想值"通常带视口单位（<code>vw</code>），所以会随窗口线性变化；两头负责兜底，防止在大屏上字大得离谱，或在小屏上挤成一团。</p>
+        <pre><code>/* 标题：最小 3.6rem，最大 9.4rem，中间随宽度走 */
+h1{ font-size: clamp(3.6rem, 12.2vw, 9.4rem); }</code></pre>
+        <p>12.2vw 是我拿设计稿反推的：在 1440 宽时刚好落在 9rem 附近，到手机宽度时自然收到 3.6rem 左右。不用记断点，看效果调系数就行。</p>
+
+        <h2>间距比字号更好用</h2>
+        <p>字号还要考虑可读性，间距直接可以放开手脚：</p>
+        <pre><code>.sec{ padding: clamp(44px, 6vw, 88px) 0; }
+.shell{ padding: 0 clamp(20px, 3.4vw, 56px); }</code></pre>
+        <p>这样小屏不会显得空，大屏也不会挤在中间一条窄带里。另一个常用位置是栅格间隙：</p>
+        <pre><code>.works{ gap: clamp(22px, 3vw, 40px) clamp(16px, 2.2vw, 28px); }</code></pre>
+
+        <h2>侧栏宽度也能量出来</h2>
+        <p>左侧固定栏用百分比加夹取，避免在 1280 宽时栏太窄、在 4K 屏上又宽得离谱：</p>
+        <pre><code>:root{ --rail: clamp(196px, 17vw, 252px); }</code></pre>
+        <p>配合 <code>calc()</code> 更实用：<code>calc(100% - var(--rail))</code> 这类算式里，夹取过的变量照样能用。</p>
+
+        <h2>三个坑</h2>
+        <ul>
+          <li>中间值别用 <code>em</code> 混着 <code>vw</code> 算，容易绕晕；统一用 <code>vw</code> 或 <code>rem + vw</code> 的加法。</li>
+          <li>夹取的上下限要留给"极窄"和"极宽"，中间不要卡太死，否则看起来像没生效。</li>
+          <li>真正需要换布局的地方（比如三列变一列），还是得用媒体查询。clamp 管尺寸，不管结构。</li>
+        </ul>
+
+        <h2>顺手记一下</h2>
+        <p>我习惯把三个数写在同一行并加注释，半年后回来看还能看懂：<code>clamp(22px, 3vw, 40px) /* 卡片间距 */</code>。这类小习惯，比记住多少属性更值钱。</p>
+      </div>
+
+      <footer class="article__ft">
+        <a href="./hello.html">← 上一篇：这个门户怎么搭的</a>
+        <a href="./night.html">下一篇：夜航 →</a>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="ft">
+    <span>© <span data-year>2026</span> 白琦 — Hand-written HTML</span>
+    <span>No framework · No tracking</span>
+    <a href="../index.html">Index ↑</a>
+  </footer>
+</div>
+
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="站内搜索">
+  <div class="search__box">
+    <div class="search__hd">
+      <input id="searchInput" type="search" placeholder="搜作品、笔记、关键词…" autocomplete="off" aria-label="搜索关键词">
+      <kbd>ESC</kbd>
+      <button class="theme" type="button" data-search-close aria-label="关闭搜索">✕</button>
+    </div>
+    <div class="search__list" id="searchList" role="listbox"></div>
+    <div class="search__ft"><span>↑ ↓ 选择 · Enter 打开</span><span>本地索引 · 无追踪</span></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../assets/js/main.js" defer></script>
+</body>
+</html>

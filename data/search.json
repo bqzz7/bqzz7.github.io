@@ -1,0 +1,18 @@
+{"site":"白琦 · 个人门户","updated":"2026-11-25","items":[
+  {"title":"首页 — 白琦","url":"index.html","tag":"page","summary":"个人门户首页：简介、入口、最近笔记与联系方式。","keywords":"白琦 bqzz7 个人主页 门户"},
+  {"title":"作品与项目 — 作品","url":"works.html","tag":"works","summary":"品牌视觉、摄影、编辑设计、展览视觉与独立开发的小工具，可按类别筛选并放大预览。","keywords":"作品 项目 品牌 摄影 包装 展览 开发 portfolio"},
+  {"title":"「潮汐」品牌视觉","url":"works.html","tag":"works","summary":"品牌设计 · 2025；品牌基础系统与延展物料。","keywords":"潮汐 品牌 视觉 2025"},
+  {"title":"「夜航」影像集","url":"works.html","tag":"works","summary":"摄影 · 2025；夜景与蓝调时刻的一组照片。","keywords":"夜航 摄影 夜景 2025"},
+  {"title":"「留白」独立刊物","url":"works.html","tag":"works","summary":"编辑设计 · 2024；版式与字体排印练习。","keywords":"留白 编辑 刊物 版式 字体 2024"},
+  {"title":"「像素与纸」展览视觉","url":"works.html","tag":"works","summary":"展览 · 2024；主视觉与现场导视。","keywords":"像素与纸 展览 视觉 导视 2024"},
+  {"title":"「街角 24 小时」","url":"works.html","tag":"works","summary":"纪实摄影 · 2023；同一条街从早到晚。","keywords":"街角 纪实 摄影 2023"},
+  {"title":"「小工具集」","url":"works.html","tag":"works","summary":"独立开发 · 2023；几个自用的小脚本与页面工具。","keywords":"小工具 开发 脚本 2023"},
+  {"title":"笔记 — 全部","url":"notes.html","tag":"page","summary":"建站、前端、摄影与日常的零散笔记，可按标签筛选。","keywords":"笔记 文章 博客 前端 建站 摄影 日常"},
+  {"title":"把单页拆成多页：这个门户怎么搭的","url":"notes/hello.html","tag":"site","summary":"零依赖、零构建、纯手写 HTML 的一次实践：目录结构、共享样式与脚本组织。","keywords":"建站 单页 多页 html css js 目录结构 无框架"},
+  {"title":"不改代码也能改版式：几个 clamp 的用法","url":"notes/grid.html","tag":"css","summary":"用 clamp() 一次性写好字号、间距与容器宽度，减少断点堆叠。","keywords":"css clamp 响应式 字号 间距 断点 前端"},
+  {"title":"夜航：拍夜景的笨办法","url":"notes/night.html","tag":"photo","summary":"慢门、找依靠、别开太亮：夜景参数与流程，以及失败的一晚。","keywords":"摄影 夜景 慢门 曝光 参数 相机"},
+  {"title":"2025 年，我换掉了三样东西","url":"notes/2025.html","tag":"life","summary":"一台相机、一套工作流、一种对效率的执念。年终回顾。","keywords":"2025 年终 总结 工作流 相机 效率"},
+  {"title":"关于 — 白琦","url":"about.html","tag":"page","summary":"在丽水做视觉的人：简介、时间线、技能标签与现在在忙的事。","keywords":"关于 简介 简历 时间线 技能 丽水"},
+  {"title":"友链 — 常去的地方","url":"links.html","tag":"page","summary":"设计、摄影、独立开发与论坛，几个常去的站。","keywords":"友链 链接 博客 设计 摄影 论坛"},
+  {"title":"工具箱 — 本地小工具","url":"lab.html","tag":"page","summary":"时间戳转换、文本统计、JSON 格式化；全部在浏览器本地运行。","keywords":"工具 时间戳 json 格式化 字数统计 lab"}
+]}

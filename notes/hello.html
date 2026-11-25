@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>把单页拆成多页：这个门户怎么搭的 — 白琦</title>
+<meta name="description" content="零依赖、零构建、纯手写 HTML：目录结构、共享样式、导航与搜索怎么组织，以及为什么这次不上框架。">
+<meta name="author" content="白琦">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://bqzz7.github.io/notes/hello.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="白琦 · 个人门户">
+<meta property="og:title" content="把单页拆成多页：这个门户怎么搭的">
+<meta property="og:description" content="零依赖、零构建、纯手写 HTML 的一次实践。">
+<meta property="og:url" content="https://bqzz7.github.io/notes/hello.html">
+<meta property="og:locale" content="zh_CN">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/css/style.css">
+<script>
+(function(){try{var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+document.documentElement.classList.add('js');
+</script>
+</head>
+<body data-root="../">
+<a class="skip" href="#main">跳到正文</a>
+<div class="progress" id="progress"></div>
+
+<aside class="rail">
+  <a class="rail__brand" href="../index.html">白琦<span>Bai Qi / bqzz7</span></a>
+  <nav class="rail__nav" aria-label="主导航">
+    <a href="../index.html"><b>01</b>首页</a>
+    <a href="../works.html"><b>02</b>作品</a>
+    <a href="../notes.html" class="is-active" aria-current="page"><b>03</b>笔记</a>
+    <a href="../about.html"><b>04</b>关于</a>
+    <a href="../links.html"><b>05</b>友链</a>
+    <a href="../lab.html"><b>06</b>工具箱</a>
+  </nav>
+  <div class="rail__foot">
+    <a href="mailto:969379064@qq.com">969379064@qq.com</a>
+    <span class="rail__dot"><i></i>Available for work</span>
+    <div class="rail__row">
+      <button class="theme" id="themeToggle" type="button" aria-pressed="false" aria-label="切换深浅色">
+        <span class="theme__label">Dark</span>
+      </button>
+      <button class="theme" type="button" data-search-open aria-label="搜索（Ctrl+K）">Ctrl K</button>
+    </div>
+  </div>
+</aside>
+
+<div class="shell">
+  <main id="main">
+    <article class="article">
+      <header class="article__hd">
+        <div class="meta"><span>2026.11.25</span><span>笔记 / 建站</span><span>约 6 分钟</span></div>
+        <h1>把单页拆成多页：这个门户怎么搭的</h1>
+      </header>
+
+      <nav class="toc" aria-label="本文目录"><b>目录</b><div id="toc"></div></nav>
+
+      <div class="prose">
+        <p>原来的首页是一整块 HTML，样式和脚本全塞在文件里。它其实挺好看，但每加一个功能就要在那个巨长的文件里找位置，改到第三次我就不想动了。这次的目标很朴素：<strong>拆开，但不要变复杂</strong>。</p>
+
+        <h2>为什么不上框架</h2>
+        <p>试过两条路。一条是引入构建工具，换来组件化和 Markdown 写作；另一条是什么都不装，纯手写。选后者是因为这个站的页面数量是可数的（现在是六页加四篇笔记），内容更新频率也不高。为十来个页面配一套 Node 工具链，收益抵不上维护成本。</p>
+        <p>代价也很直接：导航、页头、页脚要在每个页面各写一遍。我接受这个代价，因为改版时用批量替换就能同步，而且任何一个页面单独拎出来都能直接打开。</p>
+
+        <h2>目录结构</h2>
+        <p>根目录只放页面和元信息，所有可复用的东西进 <code>assets/</code>：</p>
+        <pre><code>bqzz7.github.io/
+├── index.html        首页
+├── works.html        作品（筛选 + 灯箱）
+├── notes.html        笔记列表
+├── notes/            单篇笔记
+├── about.html
+├── links.html
+├── lab.html          工具箱
+├── assets/css/style.css
+├── assets/js/main.js
+├── data/search.json  站内搜索索引
+└── legacy/index-v1.html  旧版单页备份</code></pre>
+        <p>关键是那条 <code>body data-root="../"</code>：子目录页面把根路径写进属性，脚本据此拼出 CSS、索引和跳转地址。只有一处需要改，而且不依赖任何运行环境。</p>
+
+        <h2>共享样式怎么切分</h2>
+        <p>样式表按用途分十六段，从 tokens 到响应式，每段开头有注释。改颜色只动 <code>:root</code>，深色模式是同一组变量在 <code>[data-theme="dark"]</code> 下的另一份值。因为全站只用这一组变量，切换主题不需要写第二套样式。</p>
+        <blockquote>经验：先定好颜色、间距、字号三类变量，再写组件。变量没定就动手，后面一定会返工。</blockquote>
+
+        <h2>脚本的写法</h2>
+        <p>一个 IIFE，十一个小模块：主题、年份、渐显、导航高亮、筛选、灯箱、复制、搜索、目录与进度、工具箱、外链处理。每个模块开头都判断元素在不在，不在就安静跳过。这样同一个 <code>main.js</code> 可以给六种不同的页面用，不用为每页单独写脚本。</p>
+        <p>举个小例子，搜索索引是懒加载的：打开浮层才请求 <code>search.json</code>，失败就当成空数组，页面其它功能完全不受影响。</p>
+
+        <h2>无障碍与降级</h2>
+        <p>几条底线：<code>skip link</code>、可见的 <code>:focus-visible</code>、灯箱用原生 <code>&lt;dialog&gt;</code>、动效尊重 <code>prefers-reduced-motion</code>。所有动画都只是"锦上添花"，关掉之后内容照样读得通。</p>
+        <p>另外，页面在没有 JS 的情况下也能看：渐显的初始状态由 JS 加类触发，没有 JS 就不会有透明度为 0 的段落。这个细节不做，会白屏。</p>
+
+        <h2>下一步</h2>
+        <p>短期想加的是：笔记用 Markdown 生成、RSS 订阅、PWA 离线。每一样都会单独提交，坏了就回滚，不影响主站。</p>
+      </div>
+
+      <footer class="article__ft">
+        <a href="../notes.html">← 全部笔记</a>
+        <a href="./grid.html">下一篇：几个 clamp 的用法 →</a>
+      </footer>
+    </article>
+  </main>
+
+  <footer class="ft">
+    <span>© <span data-year>2026</span> 白琦 — Hand-written HTML</span>
+    <span>No framework · No tracking</span>
+    <a href="../index.html">Index ↑</a>
+  </footer>
+</div>
+
+<div class="search" id="search" hidden role="dialog" aria-modal="true" aria-label="站内搜索">
+  <div class="search__box">
+    <div class="search__hd">
+      <input id="searchInput" type="search" placeholder="搜作品、笔记、关键词…" autocomplete="off" aria-label="搜索关键词">
+      <kbd>ESC</kbd>
+      <button class="theme" type="button" data-search-close aria-label="关闭搜索">✕</button>
+    </div>
+    <div class="search__list" id="searchList" role="listbox"></div>
+    <div class="search__ft"><span>↑ ↓ 选择 · Enter 打开</span><span>本地索引 · 无追踪</span></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../assets/js/main.js" defer></script>
+</body>
+</html>
