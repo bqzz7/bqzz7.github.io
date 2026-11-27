@@ -60,6 +60,8 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font:400 15.5px/1.72 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-feature-settings:"palt" 1;font-variant-numeric:tabular-nums;overflow-x:hidden;transition:background .25s ease,color .25s ease}
 body.is-locked{overflow:hidden}
+/* hidden 兜底：作者层的 display 会盖过浏览器默认的 [hidden]{display:none}，这里强制回收 */
+[hidden]{display:none!important}
 h1,h2,h3,h4,p,figure,blockquote{margin:0}
 a{color:inherit;text-decoration:none}
 ul,ol{margin:0;padding:0;list-style:none}
@@ -196,6 +198,7 @@ h1 sup{font-size:.2em;vertical-align:super;letter-spacing:0;color:var(--accent);
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0}
 .hero__media img{object-position:center}
 .card__art{--ph-ink:#171717}
+.card__art.art--dark{--ph-ink:#fff}
 .card__art img{object-position:center 16%}
 /* 有真实图片时去掉噪点肌理，别把照片糊上一层 */
 .hero__media::after,.card__art::after{background-image:none}

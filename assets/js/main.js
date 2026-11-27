@@ -78,10 +78,17 @@
   }
 
   /* 5 内容筛选（作品 / 笔记共用） ----------------------------------------- */
+  var pad2 = function (n) { return String(n).padStart(2, '0'); };
+  function chipName(chip) {
+    return Array.prototype.map.call(chip.childNodes, function (n) {
+      return n.nodeType === 3 ? n.textContent : '';
+    }).join('').trim();
+  }
   $$('[data-filter-group]').forEach(function (group) {
     var chips = $$('.chip', group);
     var items = $$('[data-cat]', group.parentNode).filter(function (el) { return !el.classList.contains('chip'); });
     var empty = group.parentNode.querySelector('[data-empty]');
+    var en = group.parentNode.querySelector('.sec__hd .en') || group.parentNode.querySelector('.en');
     function apply(cat) {
       items.forEach(function (el) {
         var show = cat === 'all' || el.getAttribute('data-cat') === cat;
@@ -92,9 +99,20 @@
           else { el.classList.add('is-in'); }
         }
       });
-      if (empty) {
-        var visible = items.filter(function (el) { return !el.hidden; }).length;
-        empty.hidden = visible > 0;
+      var visible = items.filter(function (el) { return !el.hidden; });
+      /* 可见条目按当前顺序在本类内从 01 重新编号（作品卡的大编号 + 图注编号） */
+      visible.forEach(function (el, i) {
+        var n = pad2(i + 1);
+        var num = $('.ph__num', el), idx = $('.card__idx', el);
+        if (num) num.textContent = n;
+        if (idx) idx.textContent = n;
+      });
+      if (empty) empty.hidden = visible.length > 0;
+      /* 右上角标注：分类名 / 本类数量 */
+      if (en) {
+        var active = chips.filter(function (c) { return c.getAttribute('data-cat') === cat; })[0];
+        var label = cat === 'all' ? 'All' : (active ? chipName(active) : cat);
+        en.textContent = label + ' / ' + pad2(visible.length);
       }
       chips.forEach(function (c) {
         var on = c.getAttribute('data-cat') === cat;
@@ -111,11 +129,13 @@
   /* 6 灯箱 ---------------------------------------------------------------- */
   var lb = $('#lb'), stage = $('#lbStage'), cap = $('#lbCap'), meta = $('#lbMeta'), count = $('#lbCount');
   var cards = $$('[data-lb]');
-  var cur = 0;
+  var cur = 0, lbList = cards.slice();
+  function visibleLb() { return cards.filter(function (c) { return !c.hidden; }); }
   function paint(i) {
-    if (!cards.length || !stage) return;
-    cur = (i + cards.length) % cards.length;
-    var c = cards[cur];
+    var list = lbList.length ? lbList : cards;
+    if (!list.length || !stage) return;
+    cur = (i + list.length) % list.length;
+    var c = list[cur];
     var media = $('.card__media', c);
     stage.innerHTML = '';
     if (media) stage.appendChild(media.cloneNode(true));
@@ -132,15 +152,18 @@
     }
     if (cap) cap.textContent = c.getAttribute('data-title') || '';
     if (meta) meta.textContent = c.getAttribute('data-meta') || '';
-    if (count) count.textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(cards.length).padStart(2, '0');
+    if (count) count.textContent = pad2(cur + 1) + ' / ' + pad2(list.length);
   }
-  function openLb(i) {
+  function openLb(el) {
     if (!lb) return;
+    lbList = visibleLb();
+    var i = lbList.indexOf(el);
+    if (i < 0) { lbList = cards.slice(); i = 0; }
     paint(i);
     if (typeof lb.showModal === 'function' && !lb.open) lb.showModal();
     document.body.classList.add('is-locked');
   }
-  cards.forEach(function (c, i) { c.addEventListener('click', function () { openLb(i); }); });
+  cards.forEach(function (c) { c.addEventListener('click', function () { openLb(c); }); });
   if (lb) {
     $$('[data-close]').forEach(function (b) { b.addEventListener('click', function () { lb.close(); }); });
     $$('.lb__nav').forEach(function (b) {
@@ -425,7 +448,34 @@
     });
   }
 
-  /* 13 外部链接：自动补 rel ---------------------------------------------- */
+  /* 13 图片卡明暗：按左下区域亮度自动选对比字色 ---------------------------- */
+  $$('.card__art img').forEach(function (img) {
+    var box = img.closest('.card__art');
+    if (!box) return;
+    function evalTone() {
+      if (!img.complete || !img.naturalWidth) return;
+      try {
+        var c = document.createElement('canvas'), w = 48, h = 48;
+        c.width = w; c.height = h;
+        var ctx = c.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        var d = ctx.getImageData(0, 0, w, h).data;
+        var r = 0, g = 0, b = 0, n = 0;
+        for (var y = Math.floor(h * 0.5); y < h; y++) {
+          for (var x = 0; x < Math.floor(w * 0.5); x++) {
+            var i = (y * w + x) * 4;
+            r += d[i]; g += d[i + 1]; b += d[i + 2]; n++;
+          }
+        }
+        var lum = (0.299 * r + 0.587 * g + 0.114 * b) / n;
+        box.classList.toggle('art--dark', lum < 120);
+        box.classList.toggle('art--light', lum >= 120);
+      } catch (e) { box.classList.add('art--light'); }
+    }
+    if (img.complete) evalTone(); else img.addEventListener('load', evalTone);
+  });
+
+  /* 14 外部链接：自动补 rel ---------------------------------------------- */
   $$('a[href^="http"]').forEach(function (a) {
     if (a.hostname && a.hostname !== location.hostname) {
       a.setAttribute('rel', 'noopener noreferrer');
